@@ -569,3 +569,250 @@ h2{
     }
 
 }
+
+/* =========================
+   v0.1.1 AUDIO SETTINGS
+========================= */
+
+#audioSection{
+    background:white;
+    margin:20px;
+    padding:20px;
+    border-radius:16px;
+    box-shadow:var(--shadow);
+}
+
+#audioSection h2{
+    margin-bottom:15px;
+}
+
+#volumeSlider{
+    width:100%;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+/* =========================
+   v0.1.1 DAILY OBJECTIVE
+========================= */
+
+#objectivePanel{
+    margin:20px;
+    padding:20px;
+    background:white;
+    border-radius:16px;
+    box-shadow:var(--shadow);
+}
+
+#dailyObjective{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+#objectiveProgress{
+    color:#666;
+    font-size:15px;
+}
+
+/* =========================
+   CUSTOMER MOODS
+========================= */
+
+.customer-mood{
+    margin-bottom:8px;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.mood-happy{
+    color:#4caf50;
+}
+
+.mood-neutral{
+    color:#ff9800;
+}
+
+.mood-angry{
+    color:#e53935;
+}
+
+/* =========================
+   VIP CUSTOMER
+========================= */
+
+.vip-badge{
+    display:inline-block;
+    background:gold;
+    color:#222;
+    padding:4px 10px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:8px;
+    box-shadow:0 0 10px rgba(255,215,0,.5);
+}
+
+/* =========================
+   COMBO POPUP
+========================= */
+
+#comboPopup{
+    position:fixed;
+    left:50%;
+    top:120px;
+    transform:translateX(-50%);
+    background:#ff9800;
+    color:white;
+    padding:16px 30px;
+    border-radius:14px;
+    font-size:26px;
+    font-weight:bold;
+    z-index:9999;
+
+    opacity:0;
+    pointer-events:none;
+}
+
+.combo-show{
+    animation:comboShow .8s ease;
+}
+
+@keyframes comboShow{
+
+    0%{
+        opacity:0;
+        transform:
+        translateX(-50%)
+        translateY(30px)
+        scale(.8);
+    }
+
+    20%{
+        opacity:1;
+        transform:
+        translateX(-50%)
+        translateY(0)
+        scale(1.1);
+    }
+
+    80%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:0;
+        transform:
+        translateX(-50%)
+        translateY(-20px)
+        scale(1);
+    }
+
+}
+
+/* =========================
+   IMPROVED CUSTOMER CARD
+========================= */
+
+.customer-card{
+    transition:.25s;
+}
+
+.customer-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+/* =========================
+   ACHIEVEMENT IMPROVEMENTS
+========================= */
+
+#achievementPopup{
+
+    border:3px solid #fff;
+
+    animation:
+    achievementFloat
+    3s ease;
+}
+
+@keyframes achievementFloat{
+
+    0%{
+        opacity:0;
+        transform:
+        translateX(-50%)
+        translateY(-30px);
+    }
+
+    20%{
+        opacity:1;
+    }
+
+    80%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:0;
+        transform:
+        translateX(-50%)
+        translateY(0);
+    }
+
+}
+
+/* =========================
+   NOTIFICATION IMPROVEMENTS
+========================= */
+
+.notification{
+
+    backdrop-filter:blur(10px);
+
+    border-left:
+    5px solid
+    var(--accent);
+}
+
+/* =========================
+   BETTER BURGER STACK
+========================= */
+
+.burger-layer{
+
+    transition:.2s;
+
+    box-shadow:
+    0 3px 8px
+    rgba(0,0,0,.1);
+}
+
+.burger-layer:hover{
+
+    transform:scale(1.03);
+
+}
+
+/* =========================
+   MOBILE IMPROVEMENTS
+========================= */
+
+@media(max-width:700px){
+
+    #comboPopup{
+
+        width:90%;
+
+        text-align:center;
+
+        font-size:20px;
+    }
+
+    #objectivePanel,
+    #audioSection{
+
+        margin:10px;
+    }
+
+}

@@ -79,6 +79,16 @@ let customerID = 0;
 ========================= */
 
 const orderPool = [
+
+    {
+        name: "Hamburger",
+        ingredients: [
+            "Bottom Bun",
+            "Beef Patty",
+            "Top Bun"
+        ]
+    },
+
     {
         name: "Cheeseburger",
         ingredients: [
@@ -88,22 +98,29 @@ const orderPool = [
             "Top Bun"
         ]
     },
+
     {
-        name: "Hamburger",
+        name: "Lettuce Burger",
         ingredients: [
             "Bottom Bun",
             "Beef Patty",
-            "Top Bun"
-        ]
-    },
-    {
-        name: "Veggie Burger",
-        ingredients: [
-            "Bottom Bun",
             "Lettuce",
             "Top Bun"
         ]
+    },
+
+    {
+        name: "Deluxe Burger",
+        ingredients: [
+            "Bottom Bun",
+            "Beef Patty",
+            "Cheese",
+            "Lettuce",
+            "Tomato",
+            "Top Bun"
+        ]
     }
+
 ];
 
 /* =========================
@@ -229,6 +246,7 @@ function gainXP(amount) {
         );
 
         unlockContent();
+        refreshIngredientLocks();
     }
 
     updateUI();
@@ -346,24 +364,47 @@ function renderCustomers() {
         card.className =
             "customer-card";
 
-        card.innerHTML = `
-            <div class="customer-name">
-                Customer #${customer.id}
-            </div>
+       card.innerHTML = `
 
-            <div class="customer-order">
-                ${customer.order.name}
-            </div>
+    <div class="customer-name">
+        Customer #${customer.id}
+    </div>
 
-            <div class="patience-bar">
-                <div
-                    class="patience-fill"
-                    style="
-                    width:${customer.patience}%
-                    ">
-                </div>
-            </div>
-        `;
+    <div class="customer-mood
+    ${
+        customer.patience > 60
+        ? "mood-happy"
+        : customer.patience > 30
+        ? "mood-neutral"
+        : "mood-angry"
+    }">
+
+        ${
+            customer.patience > 60
+            ? "😄 Happy"
+            : customer.patience > 30
+            ? "😐 Neutral"
+            : "😠 Angry"
+        }
+
+    </div>
+
+    <div class="customer-order">
+        ${customer.order.name}
+    </div>
+
+    <div class="patience-bar">
+
+        <div
+        class="patience-fill"
+        style="
+        width:${customer.patience}%">
+
+        </div>
+
+    </div>
+
+`;
 
         customerQueue.appendChild(card);
 
@@ -831,9 +872,11 @@ function serveBurger() {
             reward;
 
         game.customersServed++;
+        updateObjective();
         game.burgersMade++;
 
         game.combo++;
+        showComboPopup();
 
         if (
             game.combo >
@@ -1228,3 +1271,132 @@ updateUI();
 notify(
     "Burger Cooking Simulator v0.1.0 Loaded!"
 );
+
+/* =========================
+   AUDIO SETTINGS
+========================= */
+
+const volumeSlider =
+    document.getElementById(
+        "volumeSlider"
+    );
+
+if (volumeSlider) {
+
+    volumeSlider.addEventListener(
+        "input",
+        () => {
+
+            const volume =
+                volumeSlider.value / 100;
+
+            document
+            .querySelectorAll("audio")
+            .forEach(audio => {
+
+                audio.volume = volume;
+
+            });
+
+        }
+    );
+
+}
+
+/* =========================
+   COMBO POPUP
+========================= */
+
+function showComboPopup() {
+
+    const popup =
+        document.getElementById(
+            "comboPopup"
+        );
+
+    if (!popup) return;
+
+    popup.textContent =
+        "x" +
+        game.combo +
+        " COMBO!";
+
+    popup.classList.remove(
+        "combo-show"
+    );
+
+    void popup.offsetWidth;
+
+    popup.classList.add(
+        "combo-show"
+    );
+
+}
+
+/* =========================
+   DAILY OBJECTIVES
+========================= */
+
+let dailyGoal = 5;
+
+function updateObjective() {
+
+    const progress =
+        document.getElementById(
+            "objectiveProgress"
+        );
+
+    if (!progress) return;
+
+    progress.textContent =
+        game.customersServed +
+        " / " +
+        dailyGoal;
+
+}
+
+/* =========================
+   INGREDIENT UNLOCK UI
+========================= */
+
+function refreshIngredientLocks() {
+
+    document
+    .querySelectorAll(".ingredient")
+    .forEach(button => {
+
+        const item =
+            button.dataset.item;
+
+        if (
+            item === "Cheese" &&
+            game.unlocked.cheese
+        ) {
+
+            button.classList.remove(
+                "locked"
+            );
+
+            button.textContent =
+                "Cheese";
+        }
+
+        if (
+            item === "Chicken Patty" &&
+            game.unlocked.chicken
+        ) {
+
+            button.classList.remove(
+                "locked"
+            );
+
+            button.textContent =
+                "Chicken Patty";
+        }
+
+    });
+
+}
+
+updateObjective();
+refreshIngredientLocks();
